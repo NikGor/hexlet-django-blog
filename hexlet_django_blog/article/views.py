@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.http import HttpResponse
+from django.views import View
 
 
-def index(request):
-    return render(request, 'articles/index.html', {'app_name': 'article'})
+class ArticleView(View):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('article')
