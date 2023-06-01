@@ -14,13 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from hexlet_django_blog import views
+from django.urls import path, re_path
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from .article.views import ArticleView
 from .views import IndexView
 
 urlpatterns = [
-    path("", IndexView.as_view(), name="index"),
+    path("", lambda request: redirect(reverse_lazy('article', kwargs={'tags': 'python', 'article_id': 42})), name="index"),
+    path('articles/<str:tags>/<int:article_id>/', ArticleView.as_view(), name='article'),
     path("admin/", admin.site.urls),
-    path('articles/', ArticleView.as_view(), name='articles'),
 ]
