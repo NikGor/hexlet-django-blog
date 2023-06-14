@@ -1,7 +1,11 @@
-from django.http import HttpResponse
+from django.shortcuts import render
 from django.views import View
+from hexlet_django_blog.article.models import Article
 
 
-class ArticleView(View):
-    def get(self, request, tags, article_id, *args, **kwargs):
-        return HttpResponse(f'Stатья номер {article_id}. Тег {tags}')
+class IndexView(View):
+    def get(self, request, *args, **kwargs):
+        articles = Article.objects.all()[:15]
+        return render(request, 'articles/index.html', context={
+            'articles': articles,
+        })
